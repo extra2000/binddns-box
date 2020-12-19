@@ -1,0 +1,3 @@
+[submodule "salt/roots/formulas/binddns-formula"]
+	path = salt/roots/formulas/binddns-formula
+	url = https://github.com/extra2000/binddns-formula.git
