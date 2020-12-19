@@ -1,0 +1,65 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+def salt_provision_dnsserver_box(context)
+  context.vm.provision "salt", run: 'once' do |salt|
+    salt.minion_config = "salt/etc/minion"
+    salt.masterless = true
+    salt.run_highstate = true
+    salt.verbose = true
+    salt.log_level = "info"
+    salt.colorize = true
+    salt.install_type = "git"
+    salt.version = "3002.2"
+    salt.python_version = "3"
+    salt.bootstrap_options = "-P -x python3 -c /tmp"
+  end
+end
+
+Vagrant.configure("2") do |config|
+
+  config.vagrant.plugins = ["vagrant-reload", "vagrant-scp"]
+
+  config.vm.define "dnsserver-box" do |dnsserver_box|
+    dnsserver_box.vm.box = "generic/ubuntu2004"
+    dnsserver_box.vm.hostname = "dnsserver-box"
+
+    dnsserver_box.vm.provider "libvirt" do |v, override|
+      override.vagrant.plugins = config.vagrant.plugins + ["vagrant-libvirt"]
+      v.cpus = "1"
+      v.cputopology sockets: "1", cores: "1", threads: "1"
+      v.memory = "1024"
+      v.disk_bus = "virtio"
+      v.nic_model_type = "virtio-net-pci"
+      v.nested = false
+      v.cpu_mode = "host-model"
+      v.cpu_fallback = "allow"
+      v.graphics_type = "vnc"
+      v.kvm_hidden = "false"
+      v.machine_type = "pc-i440fx-2.11"
+      v.machine_arch = "x86_64"
+      v.autostart = false
+
+      salt_provision_dnsserver_box override
+    end
+
+    dnsserver_box.vm.provider "virtualbox" do |v, override|
+      override.vagrant.plugins = config.vagrant.plugins + ["vagrant-vbguest"]
+      override.vbguest.auto_update = false
+      override.vm.network "private_network", type: "dhcp"
+      v.name = "dnsserver-box"
+      v.gui = false
+      v.cpus = "1"
+      v.memory = "1024"
+      v.linked_clone = true
+      v.customize ["modifyvm", :id, '--natdnshostresolver1', 'on']
+      v.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
+      v.customize ['modifyvm', :id, '--audio', 'none']
+
+      salt_provision_dnsserver_box override
+    end
+
+    dnsserver_box.vm.synced_folder "salt/roots/", "/srv/", type: "rsync"
+    dnsserver_box.vm.synced_folder '.', '/vagrant', disabled: true
+  end
+end
