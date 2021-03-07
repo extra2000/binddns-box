@@ -2,3 +2,4 @@
 vagrant/*
 !vagrant/examples
 salt/roots/pillar/binddns.sls
+salt/roots/pillar/filebeat.sls
