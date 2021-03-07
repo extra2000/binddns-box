@@ -393,6 +393,7 @@ file_roots:
   base:
     - /srv/salt
     - /srv/formulas/podman-formula
+    - /srv/formulas/zabbix-agent-formula
     - /srv/formulas/binddns-formula
     - /srv/formulas/filebeat-formula
 
