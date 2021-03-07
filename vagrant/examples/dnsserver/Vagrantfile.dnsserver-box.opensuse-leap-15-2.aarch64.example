@@ -5,7 +5,7 @@ def salt_provision_dnsserver_box(context)
   context.vm.provision "salt", run: 'once' do |salt|
     salt.minion_config = "salt/etc/minion"
     salt.masterless = true
-    salt.run_highstate = true
+    salt.run_highstate = false
     salt.verbose = true
     salt.log_level = "info"
     salt.colorize = true
