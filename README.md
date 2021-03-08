@@ -19,10 +19,10 @@ $ cd binddns-box
 
 Create Vagrant files for `dnsserver`, `server01`, `server02`, and `tester` based on the examples:
 ```
-$ cp -v vagrant/examples/dnsserver/Vagrantfile.dnsserver-box.fedora-32.x86_64.example vagrant/Vagrantfile.dnsserver-box
-$ cp -v vagrant/examples/server01/Vagrantfile.server01-box.fedora-32.x86_64.example vagrant/Vagrantfile.server01-box
-$ cp -v vagrant/examples/server02/Vagrantfile.server02-box.fedora-32.x86_64.example vagrant/Vagrantfile.server02-box
-$ cp -v vagrant/examples/tester/Vagrantfile.tester-box.fedora-32.x86_64.example vagrant/Vagrantfile.tester-box
+$ cp -v vagrant/examples/dnsserver/Vagrantfile.dnsserver-box.fedora-33.x86_64.example vagrant/Vagrantfile.dnsserver-box
+$ cp -v vagrant/examples/server01/Vagrantfile.server01-box.fedora-33.x86_64.example vagrant/Vagrantfile.server01-box
+$ cp -v vagrant/examples/server02/Vagrantfile.server02-box.fedora-33.x86_64.example vagrant/Vagrantfile.server02-box
+$ cp -v vagrant/examples/tester/Vagrantfile.tester-box.fedora-33.x86_64.example vagrant/Vagrantfile.tester-box
 ```
 
 Create pillar file for BIND DNS. You can change the value in this pillar file:
