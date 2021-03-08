@@ -33,6 +33,7 @@ $ cp -v salt/roots/pillar/binddns.sls.example salt/roots/pillar/binddns.sls
 Then, up all Vagrant boxes. You can also change to `--provider=virtualbox`:
 ```
 $ vagrant up --provider=libvirt
+$ vagrant ssh dnsserver-box -- sudo salt-call state.highstate
 ```
 
 Create zone using example files. You may need to change the IP address:
