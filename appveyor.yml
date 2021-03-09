@@ -10,6 +10,8 @@ install:
   - git submodule update
 build_script:
   - cp -v salt/roots/pillar/binddns.sls.example salt/roots/pillar/binddns.sls
+  - cp -v salt/roots/pillar/filebeat.sls.example salt/roots/pillar/filebeat.sls
+  - cp -v salt/roots/pillar/zabbix-agent.sls.example salt/roots/pillar/zabbix-agent.sls
   - cp -v salt/roots/formulas/binddns-formula/binddns/files/zones.conf.example salt/roots/formulas/binddns-formula/binddns/files/zones.conf
   - cp -v salt/roots/formulas/binddns-formula/binddns/files/zones/mynet.zone.example salt/roots/formulas/binddns-formula/binddns/files/zones/mynet.zone
   - cp -v vagrant/examples/binddns/Vagrantfile.binddns-box.fedora-32.x86_64.example vagrant/Vagrantfile.binddns-box
