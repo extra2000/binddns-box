@@ -25,9 +25,11 @@ $ cp -v vagrant/examples/server02/Vagrantfile.server02-box.fedora-33.x86_64.exam
 $ cp -v vagrant/examples/tester/Vagrantfile.tester-box.fedora-33.x86_64.example vagrant/Vagrantfile.tester-box
 ```
 
-Create pillar file for BIND DNS. You can change the value in this pillar file:
+Create pillar files for BIND DNS, Filebeat, and Zabbix agent. You can change the value in these pillar files:
 ```
 $ cp -v salt/roots/pillar/binddns.sls.example salt/roots/pillar/binddns.sls
+$ cp -v salt/roots/pillar/filebeat.sls.example salt/roots/pillar/filebeat.sls
+$ cp -v salt/roots/pillar/zabbix-agent.sls.example salt/roots/pillar/zabbix-agent.sls
 ```
 
 Then, up all Vagrant boxes. You can also change to `--provider=virtualbox`:
