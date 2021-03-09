@@ -53,6 +53,33 @@ $ vagrant ssh dnsserver-box -- sudo salt-call state.sls binddns
 ```
 
 
+## Deploy Filebeat (optional)
+
+On `binddns-box`, add the following lines into `/usr/lib/systemd/system/named.service` to log output into files:
+```
+...
+[Service]
+StandardOutput=append:/var/log/named/named.log
+StandardError=append:/var/log/named/named.log
+```
+
+Create `/var/log/named` directory:
+```
+$ sudo mkdir -pv /var/log/named
+```
+
+Reload `systemd` and `named.service`:
+```
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart named.service
+```
+
+Deploy Filebeat:
+```
+$ sudo salt-call state.sls filebeat
+```
+
+
 ## Pointing clients DNS to `dnsserver`
 
 The followings command should be executed on `server01`, `server02`, and `tester` nodes.
