@@ -17,9 +17,9 @@ $ git clone --recursive https://github.com/extra2000/binddns-box.git
 $ cd binddns-box
 ```
 
-Create Vagrant files for `dnsserver`, `server01`, `server02`, and `tester` based on the examples:
+Create Vagrant files for `binddns-box`, `server01-box`, `server02-box`, and `tester-box` based on the examples:
 ```
-$ cp -v vagrant/examples/dnsserver/Vagrantfile.dnsserver-box.fedora-33.x86_64.example vagrant/Vagrantfile.dnsserver-box
+$ cp -v vagrant/examples/binddns/Vagrantfile.binddns-box.fedora-33.x86_64.example vagrant/Vagrantfile.binddns-box
 $ cp -v vagrant/examples/server01/Vagrantfile.server01-box.fedora-33.x86_64.example vagrant/Vagrantfile.server01-box
 $ cp -v vagrant/examples/server02/Vagrantfile.server02-box.fedora-33.x86_64.example vagrant/Vagrantfile.server02-box
 $ cp -v vagrant/examples/tester/Vagrantfile.tester-box.fedora-33.x86_64.example vagrant/Vagrantfile.tester-box
@@ -33,7 +33,7 @@ $ cp -v salt/roots/pillar/binddns.sls.example salt/roots/pillar/binddns.sls
 Then, up all Vagrant boxes. You can also change to `--provider=virtualbox`:
 ```
 $ vagrant up --provider=libvirt
-$ vagrant ssh dnsserver-box -- sudo salt-call state.highstate
+$ vagrant ssh binddns-box -- sudo salt-call state.highstate
 ```
 
 Create zone using example files. You may need to change the IP address:
@@ -42,14 +42,14 @@ $ cp -v salt/roots/formulas/binddns-formula/binddns/files/zones.conf.example sal
 $ cp -v salt/roots/formulas/binddns-formula/binddns/files/zones/mynet.zone.example salt/roots/formulas/binddns-formula/binddns/files/zones/mynet.zone
 ```
 
-Finally, execute `vagrant rsync dnsserver-box` to upload all changes into `dnsserver-box`:
+Finally, execute `vagrant rsync binddns-box` to upload all changes into `binddns-box`:
 ```
-$ vagrant rsync dnsserver-box
+$ vagrant rsync binddns-box
 ```
 
-Install and configure BIND DNS server on `dnsserver-box`:
+Install and configure BIND DNS server on `binddns-box`:
 ```
-$ vagrant ssh dnsserver-box -- sudo salt-call state.sls binddns
+$ vagrant ssh binddns-box -- sudo salt-call state.sls binddns
 ```
 
 
@@ -80,9 +80,9 @@ $ sudo salt-call state.sls filebeat
 ```
 
 
-## Pointing clients DNS to `dnsserver`
+## Pointing clients DNS to `binddns-box`
 
-The followings command should be executed on `server01`, `server02`, and `tester` nodes.
+The followings command should be executed on `server01-box`, `server02-box`, and `tester-box`.
 
 For RedHat family:
 ```

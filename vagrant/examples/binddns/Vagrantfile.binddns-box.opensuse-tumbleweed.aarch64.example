@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-def salt_provision_dnsserver_box(context)
+def salt_provision_binddns_box(context)
   context.vm.provision "salt", run: 'once' do |salt|
     salt.minion_config = "salt/etc/minion"
     salt.masterless = true
@@ -20,11 +20,11 @@ Vagrant.configure("2") do |config|
 
   config.vagrant.plugins = ["vagrant-reload", "vagrant-scp"]
 
-  config.vm.define "dnsserver-box" do |dnsserver_box|
-    dnsserver_box.vm.box = "opensuse/Leap-15.2.aarch64"
-    dnsserver_box.vm.hostname = "dnsserver-box"
+  config.vm.define "binddns-box" do |binddns_box|
+    binddns_box.vm.box = "opensuse/Tumbleweed.aarch64"
+    binddns_box.vm.hostname = "binddns-box"
 
-    dnsserver_box.vm.provider "libvirt" do |v, override|
+    binddns_box.vm.provider "libvirt" do |v, override|
       override.vagrant.plugins = config.vagrant.plugins + ["vagrant-libvirt"]
       v.cpus = "2"
       v.cputopology sockets: "1", cores: "2", threads: "1"
@@ -32,20 +32,17 @@ Vagrant.configure("2") do |config|
       v.disk_bus = "virtio"
       v.nic_model_type = "virtio-net-pci"
       v.nested = false
-      v.cpu_mode = "custom"
-      v.cpu_model = "cortex-a72"
       v.graphics_type = "none"
-      v.machine_type = "virt"
       v.machine_arch = "aarch64"
-      v.driver = "qemu"
+      v.driver = "kvm"
       v.autostart = false
 
       override.vm.provision 'shell', run: 'once', inline: 'zypper install -y -t pattern devel_basis', privileged: true
       override.vm.provision 'shell', run: 'once', inline: 'zypper install -y python3 python3-pip python3-setuptools python3-devel python3-virtualenv python3-pyzmq-devel', privileged: true
-      salt_provision_dnsserver_box override
+      salt_provision_binddns_box override
     end
 
-    dnsserver_box.vm.synced_folder "salt/roots/", "/srv/", type: "rsync"
-    dnsserver_box.vm.synced_folder '.', '/vagrant', disabled: true
+    binddns_box.vm.synced_folder "salt/roots/", "/srv/", type: "rsync"
+    binddns_box.vm.synced_folder '.', '/vagrant', disabled: true
   end
 end

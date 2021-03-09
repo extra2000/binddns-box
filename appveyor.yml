@@ -12,13 +12,13 @@ build_script:
   - cp -v salt/roots/pillar/binddns.sls.example salt/roots/pillar/binddns.sls
   - cp -v salt/roots/formulas/binddns-formula/binddns/files/zones.conf.example salt/roots/formulas/binddns-formula/binddns/files/zones.conf
   - cp -v salt/roots/formulas/binddns-formula/binddns/files/zones/mynet.zone.example salt/roots/formulas/binddns-formula/binddns/files/zones/mynet.zone
-  - cp -v vagrant/examples/dnsserver/Vagrantfile.dnsserver-box.fedora-32.x86_64.example vagrant/Vagrantfile.dnsserver-box
+  - cp -v vagrant/examples/binddns/Vagrantfile.binddns-box.fedora-32.x86_64.example vagrant/Vagrantfile.binddns-box
   - cp -v vagrant/examples/server01/Vagrantfile.server01-box.fedora-32.x86_64.example vagrant/Vagrantfile.server01-box
   - cp -v vagrant/examples/server02/Vagrantfile.server02-box.fedora-32.x86_64.example vagrant/Vagrantfile.server02-box
   - cp -v vagrant/examples/tester/Vagrantfile.tester-box.fedora-32.x86_64.example vagrant/Vagrantfile.tester-box
-  - sudo vagrant up --provider=libvirt dnsserver-box
-  - sudo vagrant ssh dnsserver-box -- sudo salt-call state.sls binddns
-  - sudo vagrant destroy --force dnsserver-box
+  - sudo vagrant up --provider=libvirt binddns-box
+  - sudo vagrant ssh binddns-box -- sudo salt-call state.sls binddns
+  - sudo vagrant destroy --force binddns-box
   - sudo vagrant up --provider=libvirt server01-box
   - sudo vagrant destroy --force server01-box
   - sudo vagrant up --provider=libvirt server02-box
