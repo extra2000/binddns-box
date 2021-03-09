@@ -86,8 +86,8 @@ The followings command should be executed on `server01`, `server02`, and `tester
 
 For RedHat family:
 ```
-$ sudo nmcli connection modify "System eth0" ipv4.dns "192.168.121.67"
-$ sudo nmcli connection modify "System eth0" ipv4.ignore-auto-dns yes
+$ sudo nmcli connection modify "Wired connection 1" ipv4.dns "192.168.121.67"
+$ sudo nmcli connection modify "Wired connection 1" ipv4.ignore-auto-dns yes
 $ sudo systemctl restart NetworkManager.service
 ```
 
